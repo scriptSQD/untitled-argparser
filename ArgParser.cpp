@@ -1,15 +1,12 @@
-#include "include/ArgParser.hpp"
+#include <ArgParser.hpp>
 #include <algorithm>
 
-ArgParser::ArgParser(int argc, char *argv[]) {
-    this->argc = argc;
-    if (this->argc < 2) { return; }
+ArgParser::ArgParser(int argc, char *argv[])
+    : argc(argc), argv(std::vector<std::string>(argv, argc + argv)) {}
 
-    this->argv = std::vector<std::string>(argv, argc+argv);
-}
-
-size_t ArgParser::findIndex(std::vector<std::string>& searchSource, const std::vector<std::string>& flags) {
-    for (auto & flag : flags) {
+size_t ArgParser::findIndex(std::vector<std::string> &searchSource,
+                            const std::vector<std::string> &flags) {
+    for (auto &flag : flags) {
         auto it = std::find(searchSource.begin(), searchSource.end(), flag);
         if (it != searchSource.end()) {
             return it - searchSource.begin();
@@ -27,6 +24,11 @@ ArgParser *ArgParser::IfFlagsSet(const std::vector<std::string> &flags) {
     }
 
     this->lastParsedFlagIndex = flagIndex;
+    return this;
+}
+
+ArgParser *ArgParser::GetFlagValue(bool &dest) {
+    dest = this->lastParsedFlagIndex != -1;
     return this;
 }
 

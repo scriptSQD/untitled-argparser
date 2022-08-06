@@ -45,13 +45,10 @@ class ArgParser {
     }
 
     /**
-     * Template specialization for boolean, when you just need to know whether
-     * the flag has been to, not its value.
+     * Override for boolean, when you just need to know whether
+     * the flag has been, but not its value.
      * @param dest A variable reference to where to write the flags value.
      * @return Pointer to 'this' to allow easy method chaining.
      */
-    template <> ArgParser *GetFlagValue<bool>(bool &dest) {
-        dest = this->lastParsedFlagIndex != -1;
-        return this;
-    }
+    ArgParser *GetFlagValue(bool &dest);
 };
