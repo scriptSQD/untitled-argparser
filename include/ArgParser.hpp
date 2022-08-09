@@ -1,8 +1,11 @@
 #pragma once
 
+#include <algorithm>
+#include <regex>
 #include <string>
 #include <vector>
 
+namespace SQD {
 class ArgParser {
   private:
     int argc;
@@ -21,6 +24,8 @@ class ArgParser {
      * @param argv Argument vector.
      */
     ArgParser(int argc, char *argv[]);
+
+    ~ArgParser();
 
     /**
      * Checks whether argv has any of the passed flags.
@@ -52,3 +57,4 @@ class ArgParser {
      */
     ArgParser *GetFlagValue(bool &dest);
 };
+} // namespace SQD
