@@ -1,5 +1,5 @@
 #include <ArgParser.hpp>
-2
+
 SQD::ArgParser::ArgParser(int argc, char *argv[]) : argc(argc) {
     std::regex NonSeparatedArg("(-+\\w*)=(.*)",
                                std::regex::ECMAScript | std::regex::multiline);
