@@ -1,8 +1,7 @@
 #include <ArgParser.hpp>
 
 SQD::ArgParser::ArgParser(int argc, char *argv[]) : argc(argc) {
-    std::regex NonSeparatedArg("(-+\\w*)=(.*)",
-                               std::regex::ECMAScript | std::regex::multiline);
+    std::regex NonSeparatedArg("(-+\\w*)=(.*)");
     std::smatch RegexFound;
     for (int i = 1; i < argc; i++) {
         const std::string arg = argv[i];
@@ -24,7 +23,7 @@ SQD::ArgParser::ArgParser(int argc, char *argv[]) : argc(argc) {
 SQD::ArgParser::~ArgParser() = default;
 
 size_t SQD::ArgParser::findIndex(std::vector<std::string> &searchSource,
-                            const std::vector<std::string> &flags) {
+                                 const std::vector<std::string_view> &flags) {
     for (auto &flag : flags) {
         auto it = std::find(searchSource.begin(), searchSource.end(), flag);
         if (it != searchSource.end()) {
@@ -35,7 +34,8 @@ size_t SQD::ArgParser::findIndex(std::vector<std::string> &searchSource,
     return -1;
 }
 
-SQD::ArgParser *SQD::ArgParser::IfFlagsSet(const std::vector<std::string> &flags) {
+SQD::ArgParser *
+SQD::ArgParser::IfFlagsSet(const std::vector<std::string_view> &flags) {
     const size_t flagIndex = ArgParser::findIndex(this->argv, flags);
     if (flagIndex == -1) {
         this->lastParsedFlagIndex = -1;

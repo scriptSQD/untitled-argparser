@@ -7,16 +7,6 @@
 
 namespace SQD {
 class ArgParser {
-  private:
-    int argc;
-    std::vector<std::string> argv;
-    size_t lastParsedFlagIndex = -1;
-
-    static size_t findIndex(std::vector<std::string> &,
-                            const std::vector<std::string> &);
-
-    std::string parseByIndex(size_t &flagIndex);
-
   public:
     /**
      * Initialize ArgParser with argument count and argument vector.
@@ -34,7 +24,7 @@ class ArgParser {
      * @param flags
      * @return Pointer to 'this' to allow easy method chaining.
      */
-    ArgParser *IfFlagsSet(const std::vector<std::string> &flags);
+    ArgParser *IfFlagsSet(const std::vector<std::string_view> &flags);
 
     /**
      * Parses flag value to a given variable reference based on internal bit
@@ -56,5 +46,15 @@ class ArgParser {
      * @return Pointer to 'this' to allow easy method chaining.
      */
     ArgParser *GetFlagValue(bool &dest);
+
+  private:
+    int argc;
+    std::vector<std::string> argv;
+    size_t lastParsedFlagIndex = -1;
+
+    static size_t findIndex(std::vector<std::string> &,
+                            const std::vector<std::string_view> &);
+
+    std::string parseByIndex(size_t &flagIndex);
 };
 } // namespace SQD
